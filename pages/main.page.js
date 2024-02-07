@@ -5,9 +5,17 @@ exports.MainPage = class MainPage {
         this.calendarEntry = page.locator("#entryDate");
         this.dateEntry = page.locator("#entryTime");
         this.monthEntry = page.locator(".flatpickr-monthDropdown-month");
+        this.yearEntry = page.locator(".cur-year");
+        this.ageSwitch = page.locaotr(".arrowUp");
+        this.timeEntry = page.locator("#entryTime");
+        this.hourEntry = page.locator(".flatpickr-hour");
+        this.minuteEntry = page.locator(".flatpickr-minute");
         this.calendarExit = page.locator("#exitDate");
         this.monthExit = page.locator(".flatpickr-monthDropdown-month");
-        this.dateExit = page.locator("#exitTime");
+        this.yearExit = page.locator(".cur-year");
+        this.timeExit = page.locator("#exitTime");
+        this.hourExit = page.locator(".flatpickr-hour");
+        this.minuteExit = page.locator(".flatpickr-minute");
         this.calculateButton = page.locator("#calculateCost");
         this.bookButton = page.locator("#reserveOnline")
     }
@@ -18,17 +26,16 @@ exports.MainPage = class MainPage {
         )
     }
 
-    async costCalculator(lot,dayEntry,monthEntry,yearEntry,dayExit,monthExit,yearExit){
-        await this.parkingLot.selectOption({value:lot});
+    async infoEntry(dayEntry,monthEntry,yearEntry,hourEntry,minuteEntry){
         await this.calendarEntry.click();
         await this.monthEntry.selectOption({value:monthEntry});
         while (true){
-           const currentYear = await page.locator(".cur-year").textContent();
+           const currentYear = await this.yearEntry.textContent();
            if(currentYear == yearEntry)
            {
             break;
            }
-           await page.locator(".arrowUp").click();
+           this.ageSwitch.click();
         }
         const dates = await this.page.$$("//a[@class='flatpickr-day']");
         for (const dt of dates){
@@ -37,14 +44,21 @@ exports.MainPage = class MainPage {
                 break;
             }
         }
+        await this.timeEntry.click();
+        await this.hourEntry.fill(hourEntry);
+        await this.minuteEntry.fill(minuteEntry);
+    }
+
+    async infoExit(dayExit,monthExit,yearExit,hourExit,minuteExit){
         await this.calendarExit.click();
+        await this.monthExit.selectOption({value:monthExit});
         while (true){
-            const currentYear = await page.locator(".cur-year").textContent();
+            const currentYear = await this.yearExit.textContent();
             if(currentYear == yearExit)
             {
              break;
             }
-            await page.locator(".arrowUp").click();
+            this.ageSwitch.click();
          }
          const dates2 = await this.page.$$("//a[@class='flatpickr-day']");
          for (const dt of dates2){
@@ -53,6 +67,13 @@ exports.MainPage = class MainPage {
                  break;
              }
          }
+        await this.timeEntry.click();
+        await this.hourEntry.fill(hourEntry);
+        await this.minuteEntry.fill(minuteEntry);
+    }
+
+    async costCalculator(lot){
+        await this.parkingLot.selectOption({value:lot});
         await this.calculateButton.click();
         await this.bookButton.click();
     }
