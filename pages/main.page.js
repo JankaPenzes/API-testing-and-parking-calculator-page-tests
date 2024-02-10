@@ -4,9 +4,9 @@ exports.MainPage = class MainPage {
         this.parkingLot = page.locator("#parkingLot");
         this.calendarEntry = page.locator("#entryDate");
         this.dateEntry = page.locator("#entryTime");
-        this.monthEntry = page.locator(".flatpickr-monthDropdown-month");
+        this.monthEntry = page.locator(".flatpickr-monthDropdown-months");
         this.yearEntry = page.locator(".cur-year");
-        this.ageSwitch = page.locaotr(".arrowUp");
+        this.ageSwitch = page.locator(".arrowUp");
         this.timeEntry = page.locator("#entryTime");
         this.hourEntry = page.locator(".flatpickr-hour");
         this.minuteEntry = page.locator(".flatpickr-minute");
@@ -20,8 +20,8 @@ exports.MainPage = class MainPage {
         this.bookButton = page.locator("#reserveOnline")
     }
 
-    async waitFor () {
-        this.page.waitForURL(
+    async goTo () {
+        this.page.goto(
             "https://practice.expandtesting.com/webpark"
         )
     }
