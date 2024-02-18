@@ -4,9 +4,9 @@ exports.MainPage = class MainPage {
         this.parkingLot = page.locator("#parkingLot");
         this.calendarEntry = page.locator("#entryDate");
         this.dateEntry = page.locator("#entryTime");
-        this.monthEntry = page.locator(".flatpickr-monthDropdown-months");
-        this.yearEntry = page.locator(".cur-year");
-        this.ageSwitch = page.locator(".arrowUp");
+        this.monthEntry = page.getByLabel('Month').first();
+        this.yearEntry = page.getByRole('spinbutton', { name: 'Year' });
+        this.ageSwitch = page.locator(".arrowUp").first();
         this.timeEntry = page.locator("#entryTime");
         this.hourEntry = page.locator(".flatpickr-hour");
         this.minuteEntry = page.locator(".flatpickr-minute");
@@ -28,7 +28,8 @@ exports.MainPage = class MainPage {
 
     async infoEntry(dayEntry,monthEntry,yearEntry,hourEntry,minuteEntry){
         await this.calendarEntry.click();
-        await this.monthEntry.selectOption({value:monthEntry});
+        await this.monthEntry.click();
+        await this.monthEntry.selectOption({label:monthEntry});
         while (true){
            const currentYear = await this.yearEntry.textContent();
            if(currentYear == yearEntry)
@@ -51,7 +52,7 @@ exports.MainPage = class MainPage {
 
     async infoExit(dayExit,monthExit,yearExit,hourExit,minuteExit){
         await this.calendarExit.click();
-        await this.monthExit.selectOption({value:monthExit});
+        await this.monthExit.selectOption({label:monthExit});
         while (true){
             const currentYear = await this.yearExit.textContent();
             if(currentYear == yearExit)
