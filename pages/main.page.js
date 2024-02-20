@@ -30,8 +30,8 @@ exports.MainPage = class MainPage {
         await this.calendarEntry.click();
         await this.monthEntry.click();
         await this.monthEntry.selectOption({label:monthEntry});
+        const currentYear = await this.yearEntry.textContent();
         while (true){
-           const currentYear = await this.yearEntry.textContent();
            if(currentYear == yearEntry)
            {
             break;

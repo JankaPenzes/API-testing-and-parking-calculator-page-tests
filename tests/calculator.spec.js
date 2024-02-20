@@ -10,8 +10,8 @@ const test = base.test.extend({
   });
   test.describe("Testing cost calculator", () => {
     test("@my-test-01-Filling in all the fields correctly", async ({ page, mainPage }) => {
-      await mainPage.infoEntry("24", "March","2024","12","00");
-      await mainPage.infoExit("24", "March","2024","15","00");
+      await mainPage.infoEntry("24", "March",2025,"12","00");
+      await mainPage.infoExit("24", "March",2024,"15","00");
       await mainPage.costCalculator();
     });
 });
