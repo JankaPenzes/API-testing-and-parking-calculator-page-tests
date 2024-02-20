@@ -7,12 +7,13 @@ exports.MainPage = class MainPage {
         this.monthEntry = page.getByLabel('Month').first();
         this.yearEntry = page.getByRole('spinbutton', { name: 'Year' });
         this.ageSwitch = page.locator(".arrowUp").first();
-        this.timeEntry = page.locator("#entryTime");
-        this.hourEntry = page.locator(".flatpickr-hour");
-        this.minuteEntry = page.locator(".flatpickr-minute");
+        this.timeEntry = page.getByPlaceholder('Entry Time');
+        this.hourEntry = page.getByRole('spinbutton', { name: 'Hour' });
+        this.minuteEntry = page.getByRole('spinbutton', { name: 'Minute' });
         this.calendarExit = page.locator("#exitDate");
-        this.monthExit = page.locator(".flatpickr-monthDropdown-month");
-        this.yearExit = page.locator(".cur-year");
+        this.monthExit = page.getByLabel('Month').nth(1);
+        this.yearExit = page.getByRole('spinbutton', { name: 'Year' });
+        this.ageSwitch2 = page.locator('div:nth-child(16) > .flatpickr-time > div > .arrowUp').first();
         this.timeExit = page.locator("#exitTime");
         this.hourExit = page.locator(".flatpickr-hour");
         this.minuteExit = page.locator(".flatpickr-minute");
@@ -30,8 +31,8 @@ exports.MainPage = class MainPage {
         await this.calendarEntry.click();
         await this.monthEntry.click();
         await this.monthEntry.selectOption({label:monthEntry});
-        const currentYear = await this.yearEntry.textContent();
         while (true){
+           const currentYear = parseInt(await this.yearEntry.inputValue()); 
            if(currentYear == yearEntry)
            {
             break;
@@ -54,12 +55,12 @@ exports.MainPage = class MainPage {
         await this.calendarExit.click();
         await this.monthExit.selectOption({label:monthExit});
         while (true){
-            const currentYear = await this.yearExit.textContent();
+            const currentYear = parseInt(await this.yearExit.textContent());
             if(currentYear == yearExit)
             {
              break;
             }
-            this.ageSwitch.click();
+            this.ageSwitch2.click();
          }
          const dates2 = await this.page.$$("//a[@class='flatpickr-day']");
          for (const dt of dates2){
