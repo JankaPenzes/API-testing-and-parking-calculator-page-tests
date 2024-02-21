@@ -55,7 +55,7 @@ exports.MainPage = class MainPage {
         await this.calendarExit.click();
         await this.monthExit.selectOption({label:monthExit});
         while (true){
-            const currentYear = parseInt(await this.yearExit.textContent());
+            const currentYear = parseInt(await this.yearExit.inputValue());
             if(currentYear == yearExit)
             {
              break;
