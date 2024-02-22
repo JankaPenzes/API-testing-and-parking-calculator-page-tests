@@ -19,6 +19,7 @@ exports.MainPage = class MainPage {
         this.minuteExit = page.locator(".flatpickr-minute");
         this.calculateButton = page.locator("#calculateCost");
         this.bookButton = page.locator("#reserveOnline")
+        this.date2 = (date)=>page.getByLabel(date);
     }
 
     async goTo () {
@@ -28,24 +29,28 @@ exports.MainPage = class MainPage {
     }
 
     async infoEntry(dayEntry,monthEntry,yearEntry,hourEntry,minuteEntry){
+        await this.calendarEntry.waitFor();
         await this.calendarEntry.click();
         await this.monthEntry.click();
         await this.monthEntry.selectOption({label:monthEntry});
+        let currentYear;
         while (true){
-           const currentYear = parseInt(await this.yearEntry.inputValue()); 
+           currentYear = parseInt(await this.yearEntry.inputValue()); 
            if(currentYear == yearEntry)
            {
             break;
            }
            this.ageSwitch.click();
         }
-        const dates = await this.page.$$("//a[@class='flatpickr-day']");
-        for (const dt of dates){
-            if (await dt.textContent()==dayEntry){
-                await dt.click();
-                break;
-            }
-        }
+        // const dates = await this.page.$$("//a[@class='flatpickr-day']");
+        // for (const dt of dates){
+        //     if (await dt.textContent()==dayEntry){
+        //         await dt.click();
+        //         break;
+        //     }
+        // }
+        // 'March 2, 2027'
+        await this.date2(`${monthEntry} ${dayEntry}, ${yearEntry}`).click({force:true});
         await this.timeEntry.click();
         await this.hourEntry.fill(hourEntry);
         await this.minuteEntry.fill(minuteEntry);
