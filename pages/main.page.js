@@ -34,14 +34,19 @@ exports.MainPage = class MainPage {
         await this.monthEntry.click();
         await this.monthEntry.selectOption({label:monthEntry});
         let currentYear;
-        while (true){
-           currentYear = parseInt(await this.yearEntry.inputValue()); 
-           if(currentYear == yearEntry)
-           {
-            break;
-           }
-           this.ageSwitch.click();
+        currentYear = parseInt(await this.yearEntry.inputValue());
+        while (currentYear<yearEntry){
+            this.ageSwitch.click();
+            currentYear = parseInt(await this.yearEntry.inputValue()); 
         }
+       // while (true){
+        //    currentYear = parseInt(await this.yearEntry.inputValue()); 
+        //    if(currentYear == yearEntry)
+        //    {
+        //     break;
+        //    }
+        //    this.ageSwitch.click();
+        // }
         // const dates = await this.page.$$("//a[@class='flatpickr-day']");
         // for (const dt of dates){
         //     if (await dt.textContent()==dayEntry){
