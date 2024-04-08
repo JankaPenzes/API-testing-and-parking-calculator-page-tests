@@ -2,7 +2,7 @@ const configApi = {
     projects: [
         {
             name: "API tests",
-            testMatch: "api.spec.ts"
+            testMatch: "api.spec.js"
         }
     ],
     testDir: "./tests"
