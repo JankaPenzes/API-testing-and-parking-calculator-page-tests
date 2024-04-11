@@ -13,3 +13,24 @@ test("API test2", async ({ request }) => {
         console.log(await response.json())
     });
 }); 
+test("API test3", async ({ request }) => {
+    await test.step("Testing api call response PUT1", async () => {
+        const response = await request.put("https://reqres.in/api/users/2",{data:{name: "Janka", job:"tester"}});
+        await expect(response).toBeOK();
+        console.log(await response.json())
+    });
+});
+test("API test4", async ({ request }) => {
+    await test.step("Testing api call response PATCH1", async () => {
+        const response = await request.patch("https://reqres.in/api/users/2",{data:{name: "Janka", job:"tester"}});
+        await expect(response).toBeOK();
+        console.log(await response.json())
+    });
+}); 
+test("API test5", async ({ request }) => {
+    await test.step("Testing api call response DELETE1", async () => {
+        const response = await request.patch("https://reqres.in/api/users/2");
+        await expect(response).toBeOK();
+        console.log(await response.json())
+    });
+}); 
