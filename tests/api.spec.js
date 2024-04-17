@@ -5,6 +5,7 @@ test("API test", async ({ request }) => {
         await expect(response).toBeOK();
         console.log(await response.json());
         const responseData = await response.json();
+        // responseData.data[0].email
         expect(responseData).toStrictEqual({
             "page": 2,
             "per_page": 6,
@@ -86,7 +87,6 @@ test("API test4", async ({ request }) => {
 test("API test5", async ({ request }) => {
     await test.step("Testing api call response DELETE1", async () => {
         const response = await request.delete("https://reqres.in/api/users/2");
-        await expect(response).toBeOK();
-        console.log(await response.json())
+        expect(response.status()).toBe(204);
     });
 }); 
