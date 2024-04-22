@@ -59,6 +59,7 @@ test("Requesting the list of users test", async ({ request }) => {
                 "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
             }
         });
+        expect(response.status()).toBe(200);
     });
 }); 
 test("Create a new user test", async ({ request }) => {
@@ -67,7 +68,9 @@ test("Create a new user test", async ({ request }) => {
         await expect(response).toBeOK();
         console.log(await response.json());
         const responseData = await response.json();
-        expect(responseData.data.name).toStrictEqual("Janka");
+        expect(responseData.name).toStrictEqual("Janka");
+        expect(responseData.job).toStrictEqual("teacher");
+        expect(response.status()).toBe(201);
     });
 }); 
 
@@ -77,7 +80,9 @@ test("Updating a user's data test", async ({ request }) => {
         await expect(response).toBeOK();
         console.log(await response.json());
         const responseData = await response.json();
-        expect(responseData.data[0].name).toStrictEqual("Janka");
+        expect(responseData.name).toStrictEqual("Janka");
+        expect(responseData.job).toStrictEqual("tester");
+        expect(response.status()).toBe(200);
     });
 });
 test("Updating a user's data test 2", async ({ request }) => {
@@ -86,7 +91,9 @@ test("Updating a user's data test 2", async ({ request }) => {
         await expect(response).toBeOK();
         console.log(await response.json());
         const responseData = await response.json();
-        expect(responseData.data[0].name).toStrictEqual("Janka");
+        expect(responseData.name).toStrictEqual("Janka");
+        expect(responseData.job).toStrictEqual("tester");
+        expect(response.status()).toBe(200);
     });
 }); 
 test("Deleting user test", async ({ request }) => {
