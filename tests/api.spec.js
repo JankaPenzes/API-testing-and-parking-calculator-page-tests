@@ -1,11 +1,10 @@
 const { test, expect } = require("@playwright/test");
-test("API test", async ({ request }) => {
-    await test.step("Testing api call response GET1", async () => {
+test("Requesting the list of users test", async ({ request }) => {
+    await test.step("Testing GET1 request", async () => {
         const response = await request.get("https://reqres.in/api/users",{params:{page:2}});
         await expect(response).toBeOK();
         console.log(await response.json());
         const responseData = await response.json();
-        // responseData.data[0].email
         expect(responseData).toStrictEqual({
             "page": 2,
             "per_page": 6,
@@ -62,30 +61,36 @@ test("API test", async ({ request }) => {
         });
     });
 }); 
-test("API test2", async ({ request }) => {
-    await test.step("Testing api call response POST1", async () => {
+test("Create a new user test", async ({ request }) => {
+    await test.step("Testing POST1 request", async () => {
         const response = await request.post("https://reqres.in/api/users", {data:{name: "Janka", job:"teacher"}});
         await expect(response).toBeOK();
         console.log(await response.json());
+        const responseData = await response.json();
+        expect(responseData.data.name).toStrictEqual("Janka");
     });
 }); 
 
-test("API test3", async ({ request }) => {
-    await test.step("Testing api call response PUT1", async () => {
+test("Updating a user's data test", async ({ request }) => {
+    await test.step("Testing PUT1 request", async () => {
         const response = await request.put("https://reqres.in/api/users/2",{data:{name: "Janka", job:"tester"}});
         await expect(response).toBeOK();
-        console.log(await response.json())
+        console.log(await response.json());
+        const responseData = await response.json();
+        expect(responseData.data[0].name).toStrictEqual("Janka");
     });
 });
-test("API test4", async ({ request }) => {
-    await test.step("Testing api call response PATCH1", async () => {
+test("Updating a user's data test 2", async ({ request }) => {
+    await test.step("Testing PATCH1 request", async () => {
         const response = await request.patch("https://reqres.in/api/users/2",{data:{name: "Janka", job:"tester"}});
         await expect(response).toBeOK();
-        console.log(await response.json())
+        console.log(await response.json());
+        const responseData = await response.json();
+        expect(responseData.data[0].name).toStrictEqual("Janka");
     });
 }); 
-test("API test5", async ({ request }) => {
-    await test.step("Testing api call response DELETE1", async () => {
+test("Deleting user test", async ({ request }) => {
+    await test.step("Testing DELETE1 request", async () => {
         const response = await request.delete("https://reqres.in/api/users/2");
         expect(response.status()).toBe(204);
     });
