@@ -12,7 +12,9 @@ exports.MainPage = class MainPage {
         this.hourExit = page.getByRole('spinbutton', { name: 'Hour' });
         this.minuteExit = page.getByRole('spinbutton', { name: 'Minute' });
         this.calculateButton = page.locator("#calculateCost");
-        this.bookButton = page.locator("#reserveOnline")
+        this.bookButton = page.locator("#reserveOnline");
+        this.error = page.locator(".alert-danger");
+        this.error2 = page.locator("#resultMessage");
     }
 
     async goTo () {
@@ -44,5 +46,11 @@ exports.MainPage = class MainPage {
         await this.parkingLot.selectOption(lot);
         await this.calculateButton.click();
         await this.bookButton.click();
+    }
+
+    async errorMessage(lot){
+        await this.parkingLot.click();
+        await this.parkingLot.selectOption(lot);
+        await this.calculateButton.click();
     }
 }
